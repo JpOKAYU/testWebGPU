@@ -30,18 +30,18 @@ fn main(
 }
 `;
 
-const quadVertesSize = 4*8;
-const quadPositionOffset = 4*0;
-const quadColorOffset = 4*4;
-const quadVertexCount = 6;
-const quadVertexArray = new Float32Array([
+const quadVertesSize     = 4*8; // quadVertexArrayの1vertesのバイトサイズ
+const quadPositionOffset = 4*0; // quadVertexArrayのpostionデータ先頭位置
+const quadColorOffset    = 4*4; // quadVertexArrayのcolorデータ先頭位置
+const quadVertexCount    = 6;
+const quadVertexArray    = new Float32Array([
     // position, color
-    -1,  1, 0, 1,   0, 1, 0, 1,
-    -1, -1, 0, 1,   0, 0, 0, 1,
-     1, -1, 0, 1,   1, 0, 0, 1,
-    -1,  1, 0, 1,   0, 1, 0, 1,
-     1, -1, 0, 1,   1, 0, 0, 1,
-     1,  1, 0, 1,   1, 1, 0, 1,
+    -1,  1, 0, 1.0,   0, 1, 0, 1,
+    -1, -1, 0, 1.0,   0, 0, 0, 1,
+     1, -1, 0, 1.0,   1, 0, 0, 1,
+    -1,  1, 0, 1.0,   0, 1, 0, 1,
+     1, -1, 0, 1.0,   1, 0, 0, 1,
+     1,  1, 0, 1.0,   1, 1, 0, 1,
 ]);
 
 async function init() {
@@ -77,7 +77,7 @@ async function init() {
 
   // create a vertex buffer from the cub data
   const verticesBuffer = device.createBuffer({
-    size:quadVertexArray.byteLength,
+    size: quadVertexArray.byteLength,
     usage: GPUBufferUsage.VERTEX,
     mappedAtCreation: true,
   });
