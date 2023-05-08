@@ -86,35 +86,34 @@ async function init() {
   // メモリマッピング解除
   verticesBuffer.unmap();
 
+  // buffer設定
+  const bufferState = {
+    // 配列要素間距離[byte]
+    arrayStride: quadVertesSize,
+    // 頂点バッファ属性
+    attributes: [
+        {   // position
+            shaderLocation: 0,
+            offset: quadPositionOffset,
+            format: 'float32x4',
+        },
+        {   // color
+            shaderLocation: 1,
+            offset: quadColorOffset,
+            format: 'float32x4',
+        },
+    ]
+  };
   // 頂点シェーダーのコンパイル
   const vertexState = {
     module: device.createShaderModule({code: vertexShaderWGSL}),
       entryPoint: "main",
-      buffers: [
-        {
-            // 配列要素間距離[byte]
-            arrayStride: quadVertesSize,
-            // 頂点バッファ属性
-            attributes: [
-                {
-                    // position
-                    shaderLocation: 0,
-                    offset: quadPositionOffset,
-                    format: 'float32x4',
-                },
-                {
-                    // color
-                    shaderLocation: 1,
-                    offset: quadColorOffset,
-                    format: 'float32x4',
-                },
-            ]
-        }
-      ]
+      buffers: [bufferState],
   };
   if (vertexState.module.compilationInfo) {
     console.log(await vertexState.module.compilationInfo());
   };
+
   // フラグメントシェーダのコンパイル
   const fragmentState = {
     module: device.createShaderModule({code: fragmentShaderWGSL}),
